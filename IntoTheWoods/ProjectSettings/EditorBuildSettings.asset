@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/kakaborrar.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 2f18ae39a95efc541b92c553a03422a0
+  - enabled: 1
     path: Assets/Scenes/IntoTheWoods.unity
     guid: 011c6572c13c9c341bba6d2b0e1ea523
   - enabled: 1
@@ -26,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinalBoss.unity
     guid: 9fe908bdaa42c5346894530c7d5db36d
+  - enabled: 1
+    path: Assets/Scenes/Config.unity
+    guid: 2d4c84cd3ed59a14abd18ce249f915fe
   m_configObjects: {}
