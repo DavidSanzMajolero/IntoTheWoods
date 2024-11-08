@@ -12,31 +12,32 @@ public class GameManager : MonoBehaviour
     public GameObject dialogBox;
     public TextMeshProUGUI dialogText;
     public Image icon;
-    public TextMeshProUGUI characterName; 
+    public TextMeshProUGUI characterName;
     public TextMeshProUGUI coins;
+
+    public GameObject player; 
 
     public float TotalPoints { get { return totalPoints; } }
     public float totalPoints;
 
-
     public void Awake()
     {
-        
         if (GameManager.Instance == null)
         {
             GameManager.Instance = this;
-            DontDestroyOnLoad(this.gameObject);  
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-
     }
+
     public void AddPoints(float entryPoints)
     {
         totalPoints += entryPoints;
     }
+
     public void RemovePoints(float entryPoints)
     {
         totalPoints -= entryPoints;
@@ -54,10 +55,16 @@ public class GameManager : MonoBehaviour
         dialogText.text = text;
         icon.sprite = iconChar;
         characterName.text = nameChar;
+        Time.timeScale = 0;
     }
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
 
+            SceneManager.LoadScene("Pause");
+        }
     }
 
     public void HideText()
@@ -79,7 +86,7 @@ public class GameManager : MonoBehaviour
             characterName.text = "";
         }
 
-        // Reanudar el tiempo cuando el diálogo desaparece
         Time.timeScale = 1;
     }
+
 }

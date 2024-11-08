@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharachterMovement : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class CharachterMovement : MonoBehaviour
         SpriteRenderer = GetComponent<SpriteRenderer>();
         checkpointPos = transform.position;
         gravityFlip = GetComponent<GravityFlip>();
+
+        // Suscribir al evento de cambio de escena
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Awake()
@@ -44,6 +48,12 @@ public class CharachterMovement : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Desuscribir al evento para evitar problemas de referencias
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void Update()
@@ -118,7 +128,6 @@ public class CharachterMovement : MonoBehaviour
         {
             Die();
         }
-
     }
 
     void Die()
@@ -144,5 +153,14 @@ public class CharachterMovement : MonoBehaviour
     public void UpdateCheckpoint(Vector2 pos)
     {
         checkpointPos = pos;
+    }
+
+    // Método correcto para manejar la carga de escena
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "IntoTheWoods")
+        {
+            transform.position = new Vector3(-14.09f, -2.16f, -0.059f);
+        }
     }
 }

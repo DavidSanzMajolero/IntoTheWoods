@@ -9,16 +9,21 @@ public class ButtonController : MonoBehaviour
     {
         Application.Quit();
     }
+
     public void StartButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
     public void Config()
     {
         SceneManager.LoadScene("Config");
     }
+
     public void Back()
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    
 }
