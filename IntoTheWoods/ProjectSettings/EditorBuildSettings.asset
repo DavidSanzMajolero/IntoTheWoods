@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/FinalBoss.unity
     guid: 9fe908bdaa42c5346894530c7d5db36d
   - enabled: 1
-    path: Assets/Scenes/Config.unity
+    path: Assets/Scenes/Pause.unity
     guid: 2d4c84cd3ed59a14abd18ce249f915fe
+  - enabled: 1
+    path: Assets/Scenes/Config.unity
+    guid: a7addfaab4fee5d40866011f3095a5fe
   m_configObjects: {}
