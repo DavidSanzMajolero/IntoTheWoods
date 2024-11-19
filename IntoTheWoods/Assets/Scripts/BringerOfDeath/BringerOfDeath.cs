@@ -17,6 +17,11 @@ public class BringerOfDeath : MonoBehaviour
     [SerializeField] private Transform damageController;
     [SerializeField] private float attackRange;
 
+    #region
+    public AudioSource attackSound;
+    public AudioSource deathSound;
+    #endregion
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -35,15 +40,17 @@ public class BringerOfDeath : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            deathSound.Play();
             animator.SetTrigger("death");
-            Destroy(gameObject, 1f);
+            Destroy(gameObject, 1.5f);
         }
     }
-
+    /*
     private void Death()
     {
+        deathSound.Play();
         Destroy(gameObject);
-    }
+    }*/
 
     public void LookPlayer()
     {
@@ -58,6 +65,7 @@ public class BringerOfDeath : MonoBehaviour
 
     public void Attack()
     {
+        attackSound.Play();
         Collider2D[] objects = Physics2D.OverlapCircleAll(damageController.position, attackRange);
         foreach (Collider2D collision in objects)
         {

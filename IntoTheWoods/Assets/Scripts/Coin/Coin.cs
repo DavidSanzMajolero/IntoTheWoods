@@ -11,8 +11,11 @@ public class Coin : MonoBehaviour
     public float riseSpeed = 5f;
 
     private SpriteRenderer spriteRenderer;
-    private bool isCollected = false; // Nueva variable para evitar sumar puntos múltiples veces
+    private bool isCollected = false;
 
+    #region
+    public AudioSource coinSound;
+    #endregion
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -20,9 +23,10 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isCollected && collision.gameObject.CompareTag("Player")) // Verificamos que no se haya recogido ya
+        if (!isCollected && collision.gameObject.CompareTag("Player")) 
         {
-            isCollected = true; // Marcamos la moneda como recogida
+            coinSound.Play();
+            isCollected = true; 
             GameManager.Instance.AddPoints(quantityPoints);
             StartCoroutine(DestroyCoin());
         }

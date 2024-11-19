@@ -11,6 +11,10 @@ public class GravityFlip : MonoBehaviour
     private bool grounded;
     public bool isFlipped = false;
 
+    #region
+    public AudioSource gravityFlip;
+    #endregion
+
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -31,7 +35,8 @@ public class GravityFlip : MonoBehaviour
 
     public void GravityChange()
     {
-        // Alternar el estado de inversión
+        gravityFlip.Play();
+
         isFlipped = !isFlipped;
 
         // Invertir la escala de gravedad
@@ -47,6 +52,6 @@ public class GravityFlip : MonoBehaviour
         // Asegura que la rotación del Rigidbody2D sea cero para evitar problemas de rotación
         Rigidbody2D.rotation = 0f;
 
-        Debug.Log("LA GRAVEDAD ES:" + isFlipped);
+        //Debug.Log("LA GRAVEDAD ES:" + isFlipped);
     }
 }

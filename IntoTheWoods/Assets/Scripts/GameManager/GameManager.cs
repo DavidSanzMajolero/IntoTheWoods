@@ -15,12 +15,18 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI coins;
 
-    public GameObject player; 
-
-    public float TotalPoints { get { return totalPoints; } }
+    public GameObject player;
     public float totalPoints;
 
-    public void Awake()
+    public List<string> loadedScenes = new List<string>();
+
+    public string lastScene;
+
+    public bool goBack = false; // Indicador para saber si se vuelve atrás
+
+    public float TotalPoints { get { return totalPoints; } }
+
+    private void Awake()
     {
         if (GameManager.Instance == null)
         {
@@ -31,6 +37,35 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public bool IsSceneLoaded(string sceneName)
+    {
+        return loadedScenes.Contains(sceneName);
+    }
+
+    public void AddLoadedScene(string sceneName)
+    {
+        if (!loadedScenes.Contains(sceneName))
+        {
+            loadedScenes.Add(sceneName);
+        }
+    }
+
+    public void SetLastScene(string sceneName)
+    {
+        lastScene = sceneName;
+    }
+
+    public string GetLastScene()
+    {
+        return lastScene;
+    }
+
+    // Nuevo método para configurar la dirección
+    public void SetGoBack(bool isGoingBack)
+    {
+        goBack = isGoingBack;
     }
 
     public void AddPoints(float entryPoints)
@@ -62,7 +97,6 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
             SceneManager.LoadScene("Pause");
         }
     }
@@ -88,5 +122,4 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1;
     }
-
 }
