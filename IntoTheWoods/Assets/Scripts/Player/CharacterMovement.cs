@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CharachterMovement : MonoBehaviour
 {
     public float speed = 5.0f;
-    public float jumpForce = 275.0f; // Ahora ajustado al valor específico
+    public float jumpForce = 275.0f;
 
     private Animator Animator;
     private Rigidbody2D Rigidbody2D;
@@ -25,6 +25,11 @@ public class CharachterMovement : MonoBehaviour
 
     private GravityFlip gravityFlip;
 
+    #region Audio Sources
+    public AudioSource jump;
+    public AudioSource death;
+    #endregion
+
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -33,7 +38,6 @@ public class CharachterMovement : MonoBehaviour
         checkpointPos = transform.position;
         gravityFlip = GetComponent<GravityFlip>();
 
-        // Suscribir al evento de cambio de escena
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -52,7 +56,6 @@ public class CharachterMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Desuscribir al evento para evitar problemas de referencias
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
@@ -67,7 +70,6 @@ public class CharachterMovement : MonoBehaviour
 
         Animator.SetBool("running", Horizontal != 0.0f);
 
-        // Detectar si está en el suelo, ajustando el raycast según la gravedad
         grounded = Physics2D.Raycast(transform.position, Vector2.down * Mathf.Sign(Rigidbody2D.gravityScale), 1.0f);
 
         if (Input.GetKeyDown(KeyCode.W) && grounded)
@@ -91,7 +93,7 @@ public class CharachterMovement : MonoBehaviour
         Shot();
         lastShot = Time.time;
 
-        yield return new WaitForSeconds(0.2f);  // Ajusta esto según la duración de tu animación de ataque
+        yield return new WaitForSeconds(0.2f);
 
         Animator.SetBool("attack", false);
 
@@ -114,7 +116,8 @@ public class CharachterMovement : MonoBehaviour
     {
         Vector2 jumpDirection = gravityFlip.isFlipped ? Vector2.down : Vector2.up;
         Rigidbody2D.AddForce(jumpDirection * jumpForce);
-        Animator.SetTrigger("jumping");
+        //Animator.SetTrigger("jumping");
+        jump.Play();
     }
 
     private void FixedUpdate()
@@ -132,6 +135,7 @@ public class CharachterMovement : MonoBehaviour
 
     void Die()
     {
+        death.Play();
         Animator.SetBool("dead", true);
         StartCoroutine(Respawn());
     }
@@ -155,12 +159,29 @@ public class CharachterMovement : MonoBehaviour
         checkpointPos = pos;
     }
 
-    // Método correcto para manejar la carga de escena
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "IntoTheWoods")
         {
-            transform.position = new Vector3(-14.09f, -2.16f, -0.059f);
+            transform.position = new Vector3(64.3199997f, 4.05000019f, 0.0244431272f);
         }
+        if (scene.name == "IntoTheCave")
+        {
+            transform.position = new Vector3(94.25f, -1.66999996f, -0.172340006f);
+        }
+        if (scene.name == "Shop")
+        {
+            transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+        if (scene.name == "Training")
+        {
+            transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+        if (scene.name == "IntoTheLaberint")
+        {
+            transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+
+
     }
 }

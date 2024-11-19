@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +7,7 @@ public class ChangeScen : MonoBehaviour
     public bool goBack = false;
     public bool needKey = false;
 
-    private bool playerIsAtDoor = false; 
+    private bool playerIsAtDoor = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,13 +15,20 @@ public class ChangeScen : MonoBehaviour
         {
             if (!needKey)
             {
-                if (goBack) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-                else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                string currentSceneName = SceneManager.GetActiveScene().name;
+                GameManager.Instance.SetLastScene(currentSceneName);
+
+                // Configura si el jugador va hacia atrás o hacia adelante
+                GameManager.Instance.SetGoBack(goBack);
+
+                if (goBack)
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                else
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else
             {
                 playerIsAtDoor = true;
-                //Debug.Log("You need a key to open this door");
             }
         }
     }
@@ -40,9 +45,15 @@ public class ChangeScen : MonoBehaviour
     {
         if (playerIsAtDoor && needKey && Input.GetKeyDown(KeyCode.O))
         {
-            //Debug.Log("You have opened the door");
-            if (goBack) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-            else SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            GameManager.Instance.SetLastScene(currentSceneName);
+
+            GameManager.Instance.SetGoBack(goBack);
+
+            if (goBack)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
